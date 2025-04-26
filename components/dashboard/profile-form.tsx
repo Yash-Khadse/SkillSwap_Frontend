@@ -18,12 +18,25 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, PlusIcon, XIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const profileSchema = z.object({
   name: z.string().min(2, {
@@ -59,10 +72,26 @@ export function ProfileForm() {
 
   // In a real app, these would come from the database
   const skillSuggestions = [
-    "JavaScript", "Python", "React", "Node.js", "Machine Learning",
-    "UI Design", "UX Research", "Data Science", "SQL", "DevOps",
-    "Flutter", "Swift", "Kotlin", "TypeScript", "GraphQL",
-    "AWS", "Docker", "Firebase", "MongoDB", "PostgreSQL"
+    "JavaScript",
+    "Python",
+    "React",
+    "Node.js",
+    "Machine Learning",
+    "UI Design",
+    "UX Research",
+    "Data Science",
+    "SQL",
+    "DevOps",
+    "Flutter",
+    "Swift",
+    "Kotlin",
+    "TypeScript",
+    "GraphQL",
+    "AWS",
+    "Docker",
+    "Firebase",
+    "MongoDB",
+    "PostgreSQL",
   ];
 
   const [defaultValues, setDefaultValues] = useState<ProfileFormValues>({
@@ -70,9 +99,7 @@ export function ProfileForm() {
     bio: "",
     teachSkills: [],
     learnSkills: [],
-    availability: [
-      { day: "Monday", startTime: "09:00", endTime: "17:00" },
-    ],
+    availability: [{ day: "Monday", startTime: "09:00", endTime: "17:00" }],
   });
 
   useEffect(() => {
@@ -87,9 +114,10 @@ export function ProfileForm() {
           bio: data.bio || "",
           teachSkills: Array.isArray(data.teachSkills) ? data.teachSkills : [],
           learnSkills: Array.isArray(data.learnSkills) ? data.learnSkills : [],
-          availability: Array.isArray(data.availability) && data.availability.length > 0
-            ? data.availability
-            : [{ day: "Monday", startTime: "09:00", endTime: "17:00" }],
+          availability:
+            Array.isArray(data.availability) && data.availability.length > 0
+              ? data.availability
+              : [{ day: "Monday", startTime: "09:00", endTime: "17:00" }],
         });
         setProfileLoaded(true);
       })
@@ -112,13 +140,13 @@ export function ProfileForm() {
         {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           credentials: "include",
           body: JSON.stringify(data),
         }
       );
-  
+
       if (!res.ok) {
         const errorText = await res.text();
         console.error("Backend error:", errorText); // Add this line
@@ -151,7 +179,7 @@ export function ProfileForm() {
 
   function addTeachSkill() {
     if (!newTeachSkill.trim()) return;
-    
+
     const currentSkills = form.getValues("teachSkills");
     if (currentSkills.includes(newTeachSkill)) {
       toast({
@@ -161,7 +189,7 @@ export function ProfileForm() {
       });
       return;
     }
-    
+
     if (currentSkills.length >= 5) {
       toast({
         title: "Maximum skills reached",
@@ -170,7 +198,7 @@ export function ProfileForm() {
       });
       return;
     }
-    
+
     form.setValue("teachSkills", [...currentSkills, newTeachSkill]);
     setNewTeachSkill("");
   }
@@ -185,7 +213,7 @@ export function ProfileForm() {
 
   function addLearnSkill() {
     if (!newLearnSkill.trim()) return;
-    
+
     const currentSkills = form.getValues("learnSkills");
     if (currentSkills.includes(newLearnSkill)) {
       toast({
@@ -195,7 +223,7 @@ export function ProfileForm() {
       });
       return;
     }
-    
+
     if (currentSkills.length >= 5) {
       toast({
         title: "Maximum skills reached",
@@ -204,7 +232,7 @@ export function ProfileForm() {
       });
       return;
     }
-    
+
     form.setValue("learnSkills", [...currentSkills, newLearnSkill]);
     setNewLearnSkill("");
   }
@@ -264,7 +292,7 @@ export function ProfileForm() {
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="bio"
@@ -288,7 +316,7 @@ export function ProfileForm() {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="skills">
             <Card>
               <CardHeader>
@@ -300,7 +328,7 @@ export function ProfileForm() {
               <CardContent className="space-y-6">
                 <div className="space-y-4">
                   <h3 className="text-sm font-medium">Skills You Can Teach</h3>
-                  
+
                   <div className="flex flex-wrap gap-2 min-h-12">
                     <FormField
                       control={form.control}
@@ -308,7 +336,11 @@ export function ProfileForm() {
                       render={({ field }) => (
                         <>
                           {field.value.map((skill) => (
-                            <Badge key={skill} variant="default" className="bg-blue-600">
+                            <Badge
+                              key={skill}
+                              variant="default"
+                              className="bg-blue-600"
+                            >
                               {skill}
                               <button
                                 type="button"
@@ -328,7 +360,7 @@ export function ProfileForm() {
                       )}
                     />
                   </div>
-                  
+
                   <div className="flex gap-2">
                     <Select
                       value={newTeachSkill}
@@ -349,14 +381,18 @@ export function ProfileForm() {
                       <PlusIcon className="h-4 w-4" />
                     </Button>
                   </div>
-                  <FormMessage>{form.formState.errors.teachSkills?.message}</FormMessage>
+                  <FormMessage>
+                    {form.formState.errors.teachSkills?.message}
+                  </FormMessage>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="space-y-4">
-                  <h3 className="text-sm font-medium">Skills You Want to Learn</h3>
-                  
+                  <h3 className="text-sm font-medium">
+                    Skills You Want to Learn
+                  </h3>
+
                   <div className="flex flex-wrap gap-2 min-h-12">
                     <FormField
                       control={form.control}
@@ -384,7 +420,7 @@ export function ProfileForm() {
                       )}
                     />
                   </div>
-                  
+
                   <div className="flex gap-2">
                     <Select
                       value={newLearnSkill}
@@ -405,12 +441,14 @@ export function ProfileForm() {
                       <PlusIcon className="h-4 w-4" />
                     </Button>
                   </div>
-                  <FormMessage>{form.formState.errors.learnSkills?.message}</FormMessage>
+                  <FormMessage>
+                    {form.formState.errors.learnSkills?.message}
+                  </FormMessage>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="availability">
             <Card>
               <CardHeader>
@@ -426,9 +464,14 @@ export function ProfileForm() {
                   render={({ field }) => (
                     <div className="space-y-4">
                       {field.value.map((slot, index) => (
-                        <div key={index} className="flex flex-col sm:flex-row gap-4 rounded-lg border p-4">
+                        <div
+                          key={index}
+                          className="flex flex-col sm:flex-row gap-4 rounded-lg border p-4"
+                        >
                           <div className="flex-1">
-                            <FormLabel className="text-xs text-muted-foreground">Day</FormLabel>
+                            <FormLabel className="text-xs text-muted-foreground">
+                              Day
+                            </FormLabel>
                             <Select
                               value={slot.day}
                               onValueChange={(value) => {
@@ -443,30 +486,41 @@ export function ProfileForm() {
                               <SelectContent>
                                 <SelectItem value="Monday">Monday</SelectItem>
                                 <SelectItem value="Tuesday">Tuesday</SelectItem>
-                                <SelectItem value="Wednesday">Wednesday</SelectItem>
-                                <SelectItem value="Thursday">Thursday</SelectItem>
+                                <SelectItem value="Wednesday">
+                                  Wednesday
+                                </SelectItem>
+                                <SelectItem value="Thursday">
+                                  Thursday
+                                </SelectItem>
                                 <SelectItem value="Friday">Friday</SelectItem>
-                                <SelectItem value="Saturday">Saturday</SelectItem>
+                                <SelectItem value="Saturday">
+                                  Saturday
+                                </SelectItem>
                                 <SelectItem value="Sunday">Sunday</SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
-                          
+
                           <div className="flex-1">
-                            <FormLabel className="text-xs text-muted-foreground">Start Time</FormLabel>
+                            <FormLabel className="text-xs text-muted-foreground">
+                              Start Time
+                            </FormLabel>
                             <Input
                               type="time"
                               value={slot.startTime}
                               onChange={(e) => {
                                 const newAvailability = [...field.value];
-                                newAvailability[index].startTime = e.target.value;
+                                newAvailability[index].startTime =
+                                  e.target.value;
                                 form.setValue("availability", newAvailability);
                               }}
                             />
                           </div>
-                          
+
                           <div className="flex-1">
-                            <FormLabel className="text-xs text-muted-foreground">End Time</FormLabel>
+                            <FormLabel className="text-xs text-muted-foreground">
+                              End Time
+                            </FormLabel>
                             <Input
                               type="time"
                               value={slot.endTime}
@@ -477,7 +531,7 @@ export function ProfileForm() {
                               }}
                             />
                           </div>
-                          
+
                           <div className="flex items-end justify-end">
                             <Button
                               type="button"
@@ -491,7 +545,7 @@ export function ProfileForm() {
                           </div>
                         </div>
                       ))}
-                      
+
                       <Button
                         type="button"
                         variant="outline"
@@ -508,9 +562,13 @@ export function ProfileForm() {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <div className="flex justify-end">
-            <Button type="submit" disabled={isSubmitting} className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

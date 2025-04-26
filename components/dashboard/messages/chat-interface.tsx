@@ -272,19 +272,4 @@ function MessageSkeleton({ isSender }: { isSender: boolean }) {
   );
 }
 
-const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL!, {
-  withCredentials: true,
-});
-
-useEffect(() => {
-  socket.emit("joinMatch", matchId);
-
-  socket.on("newMessage", (message) => {
-    // handle incoming message
-  });
-
-  return () => {
-    socket.emit("leaveMatch", matchId);
-    socket.off("newMessage");
-  };
-}, [matchId]);
+// REMOVE these lines at the bottom:
