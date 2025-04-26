@@ -416,7 +416,7 @@ export function ProfileForm() {
               <CardHeader>
                 <CardTitle>Availability</CardTitle>
                 <CardDescription>
-                  Set when you're available for skill exchange sessions
+                  Set when youre available for skill exchange sessions
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
